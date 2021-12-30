@@ -130,13 +130,12 @@ class _RunModelState extends State<RunModel> {
         } else {
           points = points + resultMapValue;
         }
-
-        for (var key in set.keys) {
-          if (key != 'name') {
-            if (resultMap.containsKey(key) == false) {
-              int setValue = set[key];
-              points = points + setValue;
-            }
+      }
+      for (var key in set.keys) {
+        if (key != 'name') {
+          if (resultMap.containsKey(key) == false) {
+            int setValue = set[key];
+            points = points + setValue;
           }
         }
       }
