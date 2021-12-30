@@ -52,7 +52,7 @@ class _RunModelState extends State<RunModel> {
         }
       }
     });
-    debugPrint(resMap.toString());
+    debugPrint('Got: ' + resMap.toString());
     checkResult(resMap);
   }
 
@@ -123,11 +123,21 @@ class _RunModelState extends State<RunModel> {
       int points = 0;
       for (var key in resultMap.keys) {
         int resultMapValue = resultMap[key] as int;
+
         if (set.containsKey(key)) {
-          int setValue = set[key] as int;
+          int setValue = (set[key]);
           points = points + (resultMapValue - setValue).abs();
         } else {
           points = points + resultMapValue;
+        }
+
+        for (var key in set.keys) {
+          if (key != 'name') {
+            if (resultMap.containsKey(key) == false) {
+              int setValue = set[key];
+              points = points + setValue;
+            }
+          }
         }
       }
       if (lowestPoints > points) {
@@ -135,8 +145,8 @@ class _RunModelState extends State<RunModel> {
         mostSimilarSet = set;
       }
     }
-    debugPrint(mostSimilarSet['name']);
-    debugPrint("Score: " + lowestPoints.toString());
+    debugPrint('Most similar: ' + mostSimilarSet.toString());
+    debugPrint("Score: " + lowestPoints.toString()); //lower is better
   }
 
   loadModel() async {
