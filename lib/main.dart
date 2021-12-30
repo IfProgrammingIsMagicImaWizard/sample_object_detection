@@ -17,16 +17,18 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  Future<File> loadFile() async {
-    final byteData = await rootBundle.load('assets/2.png');
-
-    File _file = File('${(await getTemporaryDirectory()).path}/2.png');
-    return await _file.writeAsBytes(byteData.buffer
-        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-  }
-
   @override
   Widget build(BuildContext context) {
+    String filePath = "assets/result/0_ELAADEN_CACHE_FLOW.jpg";
+    Future<File> loadFile() async {
+      final byteData = await rootBundle.load(filePath);
+      List pieces = filePath.split('/');
+      File _file =
+          File('${(await getTemporaryDirectory()).path}/' + pieces.last);
+      return await _file.writeAsBytes(byteData.buffer
+          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    }
+
     return FutureBuilder(
         future: loadFile(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
